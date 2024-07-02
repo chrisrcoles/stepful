@@ -7,3 +7,4 @@ venv/
 client/build/
 client/.next
 *__pycache__/
+*.DS_Store*

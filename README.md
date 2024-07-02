@@ -88,31 +88,89 @@ Response
 #### GET /api/v1/slots?student=<student_id>
 ```json
 {
-    "slots": [
-        {
-            "id": 1,
-            "start_time": "2024-06-27T04:00:00.000Z",
-            "end_time": "2024-06-27T08:00:00.000Z",
-            "coach": 1,
-            "student": 2,
-            "notes": "Great session!",
-            "satisfaction": 5
-        }
-    ]
+  "data": {
+    "available_slots": [
+      {
+        "id": "3a44e19c-ed41-4a2f-8864-57df92c2662b",
+        "coach_id": 1,
+        "start_time": "2024-07-09T16:20:00Z",
+        "end_time": "2024-07-09T18:20:00Z",
+        "coach_name": "coach1",
+        "coach_phone_number": "+12025557878"
+      }
+    ],
+    "upcoming_coaching_slots": [],
+    "upcoming_tutoring_slots": [
+      {
+        "id": "d34437de-0ef2-4563-9372-2412d0b0ce73",
+        "coach_id": 1,
+        "start_time": "2024-06-13T03:15:06Z",
+        "end_time": "2024-06-13T03:15:17Z",
+        "student_name": "student1",
+        "coach_name": "coach1",
+        "student_phone_number": "+12029987377", 
+        "coach_phone_number": "+12025557878"
+      }
+    ],
+    "past_coaching_slots": []
+  }
 }
 ```
 
+#### GET /api/v1/slots?coach=<coach_id>
 ```json
 {
-  
+  "data": {
+    "available_slots": [
+      {
+        "id": "3a44e19c-ed41-4a2f-8864-57df92c2662b",
+        "coach_id": 1,
+        "start_time": "2024-07-09T16:20:00Z",
+        "end_time": "2024-07-09T18:20:00Z",
+        "coach_name": "coach1",
+        "coach_phone_number": "+12025557878"
+      }
+    ],
+    "upcoming_coaching_slots": [
+      {
+        "id": "c1891920-3dee-4c0a-ada8-3faaf333d5ec",
+        "student_id": 2,
+        "coach_id": 1,
+        "start_time": "2024-07-06T16:11:00Z",
+        "end_time": "2024-07-06T18:11:00Z",
+        "student_name": "student1",
+        "student_phone_number": "+12029987377"
+      }
+    ],
+    "upcoming_tutoring_slots": [],
+    "past_coaching_slots": [
+      {
+        "id": "d34437de-0ef2-4563-9372-2412d0b0ce73",
+        "coach_id": 1,
+        "start_time": "2024-06-13T03:15:06Z",
+        "end_time": "2024-06-13T03:15:17Z",
+        "student_name": "student1",
+        "feedback_notes": "hi new notes, uppdated",
+        "feedback_satisfaction": 1
+      }
+    ]
+  }
 }
-
 ```
 
 #### POST /api/v1/slots
 Request
 ```json
 {
+    "coach_id": 1,
+    "start_time": "2024-06-27T04:00:00.000Z",
+    "end_time": "2024-06-27T08:00:00.000Z"
+}
+```
+Response
+```json
+{
+    "id": "88300313-f2e6-43dd-8fb4-be548ae546f2",
     "coach_id": 1,
     "start_time": "2024-06-27T04:00:00.000Z",
     "end_time": "2024-06-27T08:00:00.000Z"
@@ -128,6 +186,18 @@ Request
     "satisfaction": 4
 }
 ```
+Response
+```json
+{
+    "id": "3a44e19c-ed41-4a2f-8864-57df92c2662b",
+    "coach_id": 1,
+    "start_time": "2024-07-09T16:20:00Z",
+    "end_time": "2024-07-09T18:20:00Z",
+    "student_id": 2,
+    "satisfaction": 4,
+    "notes": "New notes here"
+}
+```
 
 
 ### Using the Dashboards
@@ -138,6 +208,9 @@ Request
 
 
 ### Application Architecture
+
+#### Documentation
+- `docs/` - Documentation root
 
 #### Backend Tools: Python 3.12.4/Django 5.0.6/PostgreSQL 13
 - `server/` - Django project root
@@ -171,4 +244,13 @@ Request
 - Students can create slots for any time in the future, regardless if they conflict with current slots 
 - No login or authentication is required for the MVP
 - No testing is required for the MVP
+
+### Improvements
+- Add authentication and authorization
+- Deploy the application to a cloud provider
+- Unit, integration and end to end tests
+- CI/CD pipeline
+- Improve API documentation
+- Optimize how React app is loading data
+- Add more features to the dashboard - most immediately as a student being able to see past booked slots
 
