@@ -1,0 +1,39 @@
+# Use the official Python image from the Docker Hub
+FROM python:3.12
+
+# Set environment variables
+ENV PYTHONUNBUFFERED 1
+
+# Set the working directory
+WORKDIR /app
+
+# Install PostgreSQL client tools
+RUN apt-get update && apt-get install -y postgresql-client
+
+# Copy the requirements file into the container
+COPY requirements.txt /app/
+
+# Install the dependencies
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
+
+# Copy the rest of the application code into the container
+COPY . .
+
+# Copy the entrypoint script
+COPY entrypoint.sh /app/
+
+# Grant execute permissions on the entrypoint script
+RUN chmod +x /app/entrypoint.sh
+
+# Change into the directory
+# Set the working directory
+WORKDIR /app/server
+
+# Expose the port the app runs on
+EXPOSE 8000
+
+# Start the Django development server
+# CMD ["sh", "-c", "python app/core/manage.py runserver 0.0.0.0:8000"]
+ENTRYPOINT ["sh", "/app/entrypoint.sh"]
+

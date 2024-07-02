@@ -1,0 +1,9 @@
+.env
+.env.server
+.env.client
+.idea/
+client/node_modules/
+venv/
+client/build/
+client/.next
+*__pycache__/

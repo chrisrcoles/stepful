@@ -1,0 +1,60 @@
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: ${RDS_DB_NAME}
+      POSTGRES_USER: ${RDS_DB_USERNAME}
+      POSTGRES_PASSWORD: ${RDS_DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - mynetwork
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${RDS_DB_USERNAME} -d ${RDS_DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  server:
+    build:
+      context: ./
+      dockerfile: Dockerfile.server
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - RDS_DB_NAME=${RDS_DB_NAME}
+      - RDS_DB_USERNAME=${RDS_DB_USERNAME}
+      - RDS_DB_PASSWORD=${RDS_DB_PASSWORD}
+      - RDS_DB_SERVICE=${RDS_DB_SERVICE}
+      - RDS_DB_PORT=${RDS_DB_PORT}
+    networks:
+      - mynetwork
+  client:
+    build:
+      context: ./
+      dockerfile: Dockerfile.client
+    volumes:
+      - ./client/:/app/
+      - /app/node_modules
+    env_file:
+      - .env.client
+    ports:
+      - "${DASHBOARD_PORT}:${DASHBOARD_PORT}"
+    command: npm run dev
+volumes:
+  postgres_data:
+
+networks:
+  mynetwork:
+
+
+
+
+
