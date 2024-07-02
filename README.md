@@ -1,6 +1,6 @@
 # Stepful Software Engineering Take-home Challenge
 
-## [Solution Outline](https://github.com/chrisrcoles/stepful/blob/master/docs/challenge.MD)
+## [Solution Outline](https://github.com/chrisrcoles/stepful/blob/main/docs/CHALLENGE.md)
 ## [Demo Walkthrough](https://drive.google.com/file/d/19qVhebu_wZMMowqkDiFcLj_XEfJdpO_9/view?usp=sharing)
 
 ## Setting up the Application 
