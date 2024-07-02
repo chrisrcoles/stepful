@@ -5,7 +5,7 @@ import time
 # Load the environment variables
 load_dotenv()
 
-# Set the start time
+# Set the start  y time
 START_TIME = int(time.time() * 1000)
 
 """
@@ -57,7 +57,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    'scheduling'
+    'scheduling',
+    'phonenumbers',
 ]
 
 MIDDLEWARE = [
